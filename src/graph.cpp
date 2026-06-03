@@ -11,5 +11,6 @@ int Node::f() const {
 }
 
 bool Node::operator<(const Node& other) const {    
-    return this->f() < other.f();
+    if(f() != other.f()) return f() < other.f();    
+    return state < other.state;
 }

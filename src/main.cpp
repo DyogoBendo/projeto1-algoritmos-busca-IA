@@ -9,7 +9,7 @@ int main(){
     std::cout << "Digite o nome do arquivo de entrada: ";
     std::cin >> filename;
     
-    Graph g = build(filename);    
+    Graph g = build(filename);        
 
     while(1){
         std::cout << "Escolha uma das opções abaixo:\n";

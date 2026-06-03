@@ -20,8 +20,8 @@ void print_graph(Graph &g){
 void print_result(std::string endNode, std::map<std::string, std::string> parent_map, int distance, int generated_nodes){
     BLOCK_SEPARATOR;
     std::cout << "Fim da execução\n";
-    std::cout << "Distância: " << distance <<"\n";
-    
+    std::cout << "Distância: " << distance <<"\n";        
+
     std::vector<std::string> path;
     while(endNode != ""){
         path.push_back(endNode);
