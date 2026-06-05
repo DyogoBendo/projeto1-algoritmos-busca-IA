@@ -8,8 +8,7 @@ int main(){
     std::string filename;
     int is_test;
     std::cout << "Executar como teste: ";
-    std::cin >> is_test;
-    std::cout << "is test: " << is_test << " \n";
+    std::cin >> is_test;    
 
     std::cout << "Digite o nome do arquivo de entrada: ";
     std::cin >> filename;
@@ -21,11 +20,18 @@ int main(){
         std::cout << "(0) Sair\n";
         std::cout << "(1) BFS\n";
         std::cout << "(2) A*\n";
+        std::cout << "(3) BFS - distância máxima\n";
         int option;
         std::cin >> option;
 
-        if(option == 1) bfs(g, is_test);
+        if(option == 1) bfs(g, -1, is_test);
         else if(option == 2) a_star(g, is_test);
+        else if (option == 3){
+            int max_distance;
+            std::cout << "Qual a distância máxima?\n";
+            std::cin >> max_distance;
+            bfs(g, max_distance, is_test);
+        }
         else break;
     }    
 }

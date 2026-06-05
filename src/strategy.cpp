@@ -9,7 +9,8 @@
 #include <functional>
 #include <map>
 
-void bfs(Graph &g, bool is_test){
+void bfs(Graph &g, int max_distance, bool is_test){
+    bool limit_distance = max_distance != -1;
     std::queue<Node> q;    
     q.push(Node(g.startNode, 0, 0));
     std::set<std::string> generated_nodes;
@@ -22,23 +23,26 @@ void bfs(Graph &g, bool is_test){
     int attempt_cnt = 1;
 
     while(!q.empty() and !found){        
-        auto [n, dist, h] = q.front(); q.pop();          
-        if(n == g.endNode){
-            tot_dist = dist;            
+        Node node = q.front(); q.pop();                  
+
+        if(node.state == g.endNode){
+            tot_dist = node.g;
             found = true;
         } 
         
-        if(!found){
-            for(auto [u, d] : g.node_edges[n]){
+        if(!found){            
+            for(auto [u, d] : g.node_edges[node.state]){
                 attempt_cnt++;
-                if(!generated_nodes.count(u)){                       
+                if(!generated_nodes.count(u) and (!limit_distance or d + node.g <= max_distance)){                       
                     generated_nodes.insert(u);
-                    parent_map[u] = n;
-                    q.push(Node(u, d + dist, 0));
+                    parent_map[u] = node.state;
+                    q.push(Node(u, d + node.g, 0));
                 }  
             } 
+            
             iteration++;
             print_iteration(iteration, q, attempt_cnt, is_test);
+            if(limit_distance)  print_available_distance(max_distance, node.g);
         }
     }
     
@@ -47,7 +51,7 @@ void bfs(Graph &g, bool is_test){
 
 void a_star(Graph &g, bool is_test){
     std::set<Node> frontier;    
-    frontier.insert(Node(g.startNode, 0, 0));
+    frontier.insert(Node(g.startNode, 0, g.node_heuristic[g.startNode]));
 
     std::map<std::string, int> generated_nodes;
     std::map<std::string, std::string> parent_map;
@@ -56,7 +60,7 @@ void a_star(Graph &g, bool is_test){
     int iteration = 0;
     bool found = false;
     int tot_dist = -1;    
-    int attempt_cnt = 0;
+    int attempt_cnt = 1;
 
     while(!frontier.empty() and !found){        
         auto fbegin = frontier.begin();

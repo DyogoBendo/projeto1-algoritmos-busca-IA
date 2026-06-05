@@ -20,8 +20,13 @@ void print_graph(Graph &g){
 void print_result(std::string endNode, std::map<std::string, std::string> parent_map, int distance, int attempt_cnt){
     BLOCK_SEPARATOR;
     std::cout << "Fim da execução\n";
-    std::cout << "Distância: " << distance <<"\n";        
+    if(distance == -1){
+        std::cout << "Não foi possível encontrar um caminho\n";
+        BLOCK_SEPARATOR;
+        return;
+    }
 
+    std::cout << "Distância: " << distance <<"\n";    
     std::vector<std::string> path;
     while(endNode != ""){
         path.push_back(endNode);
@@ -45,11 +50,10 @@ void print_iteration(int iteration, const std::set<Node, std::less<Node>, std::a
     BLOCK_SEPARATOR;
     std::cout << "Iteração: " << iteration << ":\n";
     std::cout << "Lista: ";
-    for(auto [u, d, h] : frontier){
-        std::cout << "(" << u << ": " << d << " + " << h << " = " << d + h << ") "; 
+    for(Node node : frontier){
+        std::cout << "(" << node.state << ": " << node.g << " + " << node.h << " = " << node.f() << ") "; 
     }
-    std::cout << "\nQuantidade de tentativas de inserções na fronteira: " << attempt_cnt << "\n";   
-    BLOCK_SEPARATOR;
+    std::cout << "\nQuantidade de tentativas de inserções na fronteira: " << attempt_cnt << "\n";       
 }
 
 void print_iteration(int iteration, std::queue<Node> frontier, int attempt_cnt, bool is_test){    
@@ -57,11 +61,19 @@ void print_iteration(int iteration, std::queue<Node> frontier, int attempt_cnt, 
 
     BLOCK_SEPARATOR;
     std::cout << "Iteração: " << iteration << ":\n";
-    std::cout << "Lista: ";
+    std::cout << "Fila: ";
     while(!frontier.empty()){
-        auto [u, d, h] = frontier.front(); frontier.pop();
-        std::cout << "(" << u << ": " << d << " + " << h << " = " << d + h << ") "; 
+        Node node = frontier.front(); frontier.pop();
+        std::cout << "(" << node.state << ": " << node.g << " + " << node.h << " = " << node.f() << ") "; 
     }    
-    std::cout << "\nQuantidade de tentativas de inserções na fronteira: " << attempt_cnt << "\n";   
-    BLOCK_SEPARATOR;
+    std::cout << "\nQuantidade de tentativas de inserções na fronteira: " << attempt_cnt << "\n";       
+}
+
+void print_available_distance(int max_distance, int curr_distance){
+    std::cout << "Distância disponível: ";
+    int diff = std::max(max_distance - curr_distance, 0);
+
+    std::cout << diff;
+    if(diff == 0) std::cout << " - Caminho descartado";
+    std::cout << "\n";
 }
