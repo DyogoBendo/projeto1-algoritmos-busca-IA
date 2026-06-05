@@ -19,6 +19,7 @@ void bfs(Graph &g, bool is_test){
     bool found = false;
     int tot_dist = -1;        
     generated_nodes.insert(g.startNode);
+    int attempt_cnt = 1;
 
     while(!q.empty() and !found){        
         auto [n, dist, h] = q.front(); q.pop();          
@@ -28,17 +29,20 @@ void bfs(Graph &g, bool is_test){
         } 
         
         if(!found){
-            for(auto [u, d] : g.node_edges[n]) if(!generated_nodes.count(u)){                       
-                generated_nodes.insert(u);
-                parent_map[u] = n;
-                q.push(Node(u, d + dist, 0));
-            }
+            for(auto [u, d] : g.node_edges[n]){
+                attempt_cnt++;
+                if(!generated_nodes.count(u)){                       
+                    generated_nodes.insert(u);
+                    parent_map[u] = n;
+                    q.push(Node(u, d + dist, 0));
+                }  
+            } 
             iteration++;
-            print_iteration(iteration, q, generated_nodes.size(), is_test);
+            print_iteration(iteration, q, attempt_cnt, is_test);
         }
     }
     
-    print_result(g.endNode, parent_map, tot_dist, generated_nodes.size());
+    print_result(g.endNode, parent_map, tot_dist, attempt_cnt);
 }
 
 void a_star(Graph &g, bool is_test){
@@ -52,6 +56,7 @@ void a_star(Graph &g, bool is_test){
     int iteration = 0;
     bool found = false;
     int tot_dist = -1;    
+    int attempt_cnt = 0;
 
     while(!frontier.empty() and !found){        
         auto fbegin = frontier.begin();
@@ -66,6 +71,7 @@ void a_star(Graph &g, bool is_test){
         if(!found){
             for(auto [u, d] : g.node_edges[node.state]){                
                 Node prox(u, d + node.g, g.node_heuristic[u]);                
+                attempt_cnt++;
                 if(!generated_nodes.count(u) or generated_nodes[u] > prox.g){        
                     if(generated_nodes.count(u)) frontier.erase(Node(u, generated_nodes[u], g.node_heuristic[u]));
                     
@@ -76,9 +82,9 @@ void a_star(Graph &g, bool is_test){
             }     
                                 
             iteration++;
-            print_iteration(iteration, frontier, (int) generated_nodes.size(), is_test);
+            print_iteration(iteration, frontier, attempt_cnt, is_test);
         }
     }
     
-    print_result(g.endNode, parent_map, tot_dist, generated_nodes.size());
+    print_result(g.endNode, parent_map, tot_dist, attempt_cnt);
 }

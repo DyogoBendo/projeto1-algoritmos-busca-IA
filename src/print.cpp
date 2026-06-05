@@ -17,7 +17,7 @@ void print_graph(Graph &g){
 }
 
 
-void print_result(std::string endNode, std::map<std::string, std::string> parent_map, int distance, int generated_nodes){
+void print_result(std::string endNode, std::map<std::string, std::string> parent_map, int distance, int attempt_cnt){
     BLOCK_SEPARATOR;
     std::cout << "Fim da execução\n";
     std::cout << "Distância: " << distance <<"\n";        
@@ -35,11 +35,11 @@ void print_result(std::string endNode, std::map<std::string, std::string> parent
         if(i < (int) path.size() - 1) std::cout << " - ";
     }
 
-    std::cout << "\nNós gerados: " << generated_nodes << "\n";   
+    std::cout << "\nQuantidade de tentativas de inserções na fronteira: " << attempt_cnt << "\n";   
     BLOCK_SEPARATOR;
 }
 
-void print_iteration(int iteration, const std::set<Node, std::less<Node>, std::allocator<Node>> &frontier, int generated_nodes, bool is_test){    
+void print_iteration(int iteration, const std::set<Node, std::less<Node>, std::allocator<Node>> &frontier, int attempt_cnt, bool is_test){    
     if(is_test) return;
 
     BLOCK_SEPARATOR;
@@ -48,11 +48,11 @@ void print_iteration(int iteration, const std::set<Node, std::less<Node>, std::a
     for(auto [u, d, h] : frontier){
         std::cout << "(" << u << ": " << d << " + " << h << " = " << d + h << ") "; 
     }
-    std::cout << "\nNós gerados: " << generated_nodes << "\n";   
+    std::cout << "\nQuantidade de tentativas de inserções na fronteira: " << attempt_cnt << "\n";   
     BLOCK_SEPARATOR;
 }
 
-void print_iteration(int iteration, std::queue<Node> frontier, int generated_nodes, bool is_test){    
+void print_iteration(int iteration, std::queue<Node> frontier, int attempt_cnt, bool is_test){    
     if(is_test) return;
 
     BLOCK_SEPARATOR;
@@ -62,6 +62,6 @@ void print_iteration(int iteration, std::queue<Node> frontier, int generated_nod
         auto [u, d, h] = frontier.front(); frontier.pop();
         std::cout << "(" << u << ": " << d << " + " << h << " = " << d + h << ") "; 
     }    
-    std::cout << "\nNós gerados: " << generated_nodes << "\n";   
+    std::cout << "\nQuantidade de tentativas de inserções na fronteira: " << attempt_cnt << "\n";   
     BLOCK_SEPARATOR;
 }
