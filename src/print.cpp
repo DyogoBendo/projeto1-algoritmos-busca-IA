@@ -38,3 +38,30 @@ void print_result(std::string endNode, std::map<std::string, std::string> parent
     std::cout << "\nNós gerados: " << generated_nodes << "\n";   
     BLOCK_SEPARATOR;
 }
+
+void print_iteration(int iteration, const std::set<Node, std::less<Node>, std::allocator<Node>> &frontier, int generated_nodes, bool is_test){    
+    if(is_test) return;
+
+    BLOCK_SEPARATOR;
+    std::cout << "Iteração: " << iteration << ":\n";
+    std::cout << "Lista: ";
+    for(auto [u, d, h] : frontier){
+        std::cout << "(" << u << ": " << d << " + " << h << " = " << d + h << ") "; 
+    }
+    std::cout << "\nNós gerados: " << generated_nodes << "\n";   
+    BLOCK_SEPARATOR;
+}
+
+void print_iteration(int iteration, std::queue<Node> frontier, int generated_nodes, bool is_test){    
+    if(is_test) return;
+
+    BLOCK_SEPARATOR;
+    std::cout << "Iteração: " << iteration << ":\n";
+    std::cout << "Lista: ";
+    while(!frontier.empty()){
+        auto [u, d, h] = frontier.front(); frontier.pop();
+        std::cout << "(" << u << ": " << d << " + " << h << " = " << d + h << ") "; 
+    }    
+    std::cout << "\nNós gerados: " << generated_nodes << "\n";   
+    BLOCK_SEPARATOR;
+}

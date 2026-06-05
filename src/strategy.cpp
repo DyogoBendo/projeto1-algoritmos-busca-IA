@@ -9,9 +9,9 @@
 #include <functional>
 #include <map>
 
-void dfs_backtracking(Graph &g){
-    std::vector<Node> st;    
-    st.push_back(Node(g.startNode, 0, 0));
+void bfs(Graph &g, bool is_test){
+    std::queue<Node> q;    
+    q.push(Node(g.startNode, 0, 0));
     std::set<std::string> generated_nodes;
     std::map<std::string, std::string> parent_map;
     
@@ -20,8 +20,8 @@ void dfs_backtracking(Graph &g){
     int tot_dist = -1;        
     generated_nodes.insert(g.startNode);
 
-    while(!st.empty() and !found){        
-        auto [n, dist, h] = st.back(); st.pop_back();          
+    while(!q.empty() and !found){        
+        auto [n, dist, h] = q.front(); q.pop();          
         if(n == g.endNode){
             tot_dist = dist;            
             found = true;
@@ -31,17 +31,17 @@ void dfs_backtracking(Graph &g){
             for(auto [u, d] : g.node_edges[n]) if(!generated_nodes.count(u)){                       
                 generated_nodes.insert(u);
                 parent_map[u] = n;
-                st.push_back(Node(u, d + dist, 0));
+                q.push(Node(u, d + dist, 0));
             }
             iteration++;
-            print_iteration(iteration, st, generated_nodes.size());
+            print_iteration(iteration, q, generated_nodes.size(), is_test);
         }
     }
     
     print_result(g.endNode, parent_map, tot_dist, generated_nodes.size());
 }
 
-void a_star(Graph &g){
+void a_star(Graph &g, bool is_test){
     std::set<Node> frontier;    
     frontier.insert(Node(g.startNode, 0, 0));
 
@@ -76,7 +76,7 @@ void a_star(Graph &g){
             }     
                                 
             iteration++;
-            print_iteration(iteration, frontier, generated_nodes.size());
+            print_iteration(iteration, frontier, (int) generated_nodes.size(), is_test);
         }
     }
     

@@ -6,6 +6,10 @@
 
 int main(){
     std::string filename;
+    int is_test;
+    std::cout << "Executar como teste: ";
+    std::cin >> is_test;
+
     std::cout << "Digite o nome do arquivo de entrada: ";
     std::cin >> filename;
     
@@ -14,13 +18,13 @@ int main(){
     while(1){
         std::cout << "Escolha uma das opções abaixo:\n";
         std::cout << "(0) Sair\n";
-        std::cout << "(1) DFS com backtracking\n";
+        std::cout << "(1) BFS\n";
         std::cout << "(2) A*\n";
         int option;
         std::cin >> option;
 
-        if(option == 1) dfs_backtracking(g);
-        else if(option == 2) a_star(g);
+        if(option == 1) bfs(g, is_test);
+        else if(option == 2) a_star(g, is_test);
         else break;
     }    
 }

@@ -2,7 +2,7 @@
 #define STRATEGY_H
 #include "graph.hpp"
 
-void dfs_backtracking(Graph &g);
-void a_star(Graph &g);
+void bfs(Graph &g, bool is_test);
+void a_star(Graph &g, bool is_test);
 
 #endif
