@@ -9,6 +9,7 @@ int main(){
     int is_test;
     std::cout << "Executar como teste: ";
     std::cin >> is_test;
+    std::cout << "is test: " << is_test << " \n";
 
     std::cout << "Digite o nome do arquivo de entrada: ";
     std::cin >> filename;

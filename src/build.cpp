@@ -15,7 +15,7 @@ std::string extract_node(std::string &s){
 
     std::string r = "";
     while(s[i] != ')'){
-        r += s[i];
+        if(s[i] != ' ') r += s[i];
         i++;
     }
 
@@ -23,7 +23,7 @@ std::string extract_node(std::string &s){
 }
 
 void set_is_oriented(Graph &g, std::string &s){
-    g.is_oriented = s[10] == 's';
+    g.is_oriented = contains(s, "s");
 }
 
 std::tuple<std::string, std::string, int> extract_edge(std::string &s){
@@ -32,23 +32,26 @@ std::tuple<std::string, std::string, int> extract_edge(std::string &s){
     i++;
 
     std::string u, v;
+    
+    while(s[i] != ','){
+        if(s[i] != ' ') u += s[i];
+        i++;
+    }
+    
+    i++;
+    while(s[i] != ','){
+        if(s[i] != ' ') v += s[i];
+        i++;
+    }
+    
+    i++;
+    
     int d = 0;
-
-    while(s[i] != ','){
-        u += s[i];
-        i++;
-    }
-
-    i++;
-    while(s[i] != ','){
-        v += s[i];
-        i++;
-    }
-
-    i++;
     while(s[i] != ')'){
-        d*=10;
-        d += s[i] - '0';
+        if(s[i] != ' '){
+            d*=10;
+            d += s[i] - '0';
+        }
         i++;
     }
 
@@ -63,7 +66,7 @@ void add_edge_cost(Graph &g, std::string &s){
 }
 
 void add_edge_heuristic(Graph &g, std::string &s){
-    auto [u, v, d] = extract_edge(s);
+    auto [u, v, d] = extract_edge(s);    
     assert(v == g.endNode);
     
     g.node_heuristic[u] = d;    
@@ -73,7 +76,7 @@ Graph build(const std::string& filename){
     Graph g;
     std::string s;
     std::ifstream file(filename);
-    while(file >> s){
+    while(std::getline(file, s)){        
         if(contains(s, "ponto_inicial")) g.startNode = extract_node(s);
         else if(contains(s, "ponto_final")) g.endNode = extract_node(s);
         else if(contains(s, "orientado")) set_is_oriented(g, s);
