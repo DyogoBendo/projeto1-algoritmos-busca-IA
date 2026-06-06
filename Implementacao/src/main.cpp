@@ -6,10 +6,6 @@
 
 int main(){
     std::string filename;
-    int is_test;
-    std::cout << "Executar como teste: ";
-    std::cin >> is_test;    
-
     std::cout << "Digite o nome do arquivo de entrada: ";
     std::cin >> filename;
     
@@ -24,13 +20,13 @@ int main(){
         int option;
         std::cin >> option;
 
-        if(option == 1) bfs(g, -1, is_test);
-        else if(option == 2) a_star(g, is_test);
+        if(option == 1) bfs(g, -1, false);
+        else if(option == 2) a_star(g, false);
         else if (option == 3){
             int max_distance;
             std::cout << "Qual a distância máxima?\n";
             std::cin >> max_distance;
-            bfs(g, max_distance, is_test);
+            bfs(g, max_distance, false);
         }
         else break;
     }    
