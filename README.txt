@@ -2,8 +2,10 @@ Este projeto foi desenvolvido utilizando a linguagem C++ na versão 17, com o co
 
 Para compilar o projeto, existem duas possibilidades: via Makefile ou utilizando o compilador diretamente. 
 
-Para utilizar o Makefile é necessário ter o make instalado. Nesse caso, basta digitar o comando "make" dentro da pasta "Implementacao" e será gerado o arquivo a.out, que pode ser executado. 
+Para utilizar o Makefile é necessário ter o make instalado. Nesse caso, basta digitar o comando "make" dentro da pasta "Implementacao". 
 
 Caso não seja possível utilizar o make, para compilar o projeto, dentro da pasta "Implementacao", execute o comando: "g++ -Wall -Wextra -std=c++17 -Iheaders ./src/*.cpp" 
+
+Após compilar, será gerado um arquivo "a.out" ou "a.exe" dependendo do sistema operacional. Basta executá-lo. 
 
 É necessário que os arquivos que contenham os grafos a serem testados estejam dentro da pasta "Implementacao" para que sejam corretamente acessados. 
