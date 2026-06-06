@@ -6,4 +6,4 @@ Para utilizar o Makefile é necessário ter o make instalado. Nesse caso, basta 
 
 Caso não seja possível utilizar o make, para compilar o projeto, dentro da pasta "Implementacao", execute o comando: "g++ -Wall -Wextra -std=c++17 -Iheaders ./src/*.cpp" 
 
-É necessário que os arquivos estejam dentro da pasta "Implementacao" para que sejam corretamente acessados. 
+É necessário que os arquivos que contenham os grafos a serem testados estejam dentro da pasta "Implementacao" para que sejam corretamente acessados. 
