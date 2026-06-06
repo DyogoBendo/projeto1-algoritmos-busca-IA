@@ -5,3 +5,5 @@ Para compilar o projeto, existem duas possibilidades: via Makefile ou utilizando
 Para utilizar o Makefile é necessário ter o make instalado. Nesse caso, basta digitar o comando "make" dentro da pasta "Implementacao" e será gerado o arquivo a.out, que pode ser executado. 
 
 Caso não seja possível utilizar o make, para compilar o projeto, dentro da pasta "Implementacao", execute o comando: "g++ -Wall -Wextra -std=c++17 -Iheaders ./src/*.cpp" 
+
+É necessário que os arquivos estejam dentro da pasta "Implementacao" para que sejam corretamente acessados. 
